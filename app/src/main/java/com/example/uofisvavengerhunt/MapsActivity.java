@@ -3,6 +3,8 @@ package com.example.uofisvavengerhunt;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private Location lastLocation;
     private static final String TAG = "MainActivity";
+    private String triviaMessage = "Welcome to Trivia";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d(TAG, "Updating Location");
             updateLocation();
         });
+
     }
 
 
@@ -62,7 +66,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void updateLocation() {
         // Grab current location, update via button.
+
+        //Show Popup message if in right location, setting this to whenever button is clicked for testing purposes
+        locationUpdate();
     }
+
+    /**
+     * For display popup
+     */
+    private void locationUpdate() {
+        Snackbar updateLoc = Snackbar.make(findViewById(R.id.myCoordinatorLayout),R.string.location_update,Snackbar.LENGTH_LONG);
+        updateLoc.show();
+    }
+
 
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
