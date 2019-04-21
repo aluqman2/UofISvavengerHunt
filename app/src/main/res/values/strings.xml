@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">UofIScavengerHunt</string>
     <string name="title_activity_maps">Map</string>
-    <string name="location_update">Updating Location...</string>
+    <string name="trivia_test">Trivia Test</string>
 </resources>
