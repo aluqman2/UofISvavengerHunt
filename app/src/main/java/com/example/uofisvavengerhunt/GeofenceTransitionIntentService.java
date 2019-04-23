@@ -21,7 +21,7 @@ public class GeofenceTransitionIntentService extends IntentService {
         int geofenceTransition = event.getGeofenceTransition();
 
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL) {
-            Log.d(TAG, "Holy fuck");
+            Log.e(TAG, "Holy fuck");
         }
     }
 }

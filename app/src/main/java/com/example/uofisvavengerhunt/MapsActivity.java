@@ -8,8 +8,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -82,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .setExpirationDuration(1000000000)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
                 .setCircularRegion(40, -88, 50)
-                .setLoiteringDelay(1000)
+                .setLoiteringDelay(10000)
                 .build());
 
         geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent());
@@ -181,7 +179,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return geofencePendingIntent;
         }
         Intent intent = new Intent(this, GeofenceTransitionIntentService.class);
-        geofencePendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        geofencePendingIntent = PendingIntent.getService(this, 1000, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return geofencePendingIntent;
     }
 }
