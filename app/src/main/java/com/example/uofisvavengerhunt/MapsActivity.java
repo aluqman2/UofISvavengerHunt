@@ -7,6 +7,9 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -52,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private PendingIntent geofencePendingIntent;
 
     private ArrayList<Geofence> geofences = new ArrayList<>();
+    private static String triviaMessage = "Welcome to Trivia";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final Button jeff = findViewById(R.id.button);
         jeff.setOnClickListener(v -> {
             Log.d(TAG, "Updating Location");
-            updateLocation();
+            triviaTest();
         });
 
         geofences.add(new Geofence.Builder()
@@ -118,6 +122,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+        // Grab current location, update via button.
+
+        //Show Popup message if in right location, setting this to whenever button is clicked for testing purposes
+        //locationUpdate();
+    }
+
+    /**
+     * For display popup
+     */
+    /*private void locationUpdate() {
+        Snackbar updateLoc = Snackbar.make(findViewById(R.id.myCoordinatorLayout),R.string.location_update,Snackbar.LENGTH_LONG);
+        updateLoc.show();
+    } */
+
+    /**
+     * creates new Dialog
+     */
+    private void triviaTest() {
+        TriviaDialog trivia = new TriviaDialog();
+        trivia.show(getSupportFragmentManager(), "test");
+    }
+
+    //remember to at some point update the trivia message based on location of user
+
+    /**
+     * supporting method for TriviaDialog class
+     * gives the string in triviaMessage to TriviaDialog to display to user
+     * @return the string currently stored in triviaMessage
+     */
+    public static String getTriviaMessage() {
+        return triviaMessage;
     }
 
     private void checkPermissions() {
