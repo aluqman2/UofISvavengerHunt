@@ -67,11 +67,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         geofences.add(new Geofence.Builder()
                 .setRequestId("Siebel")
-                .setExpirationDuration(1000000000)
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setCircularRegion(40, -88, 50)
+                .setCircularRegion(40, -88, 10)
                 .setLoiteringDelay(10000)
                 .build());
+
+        geofences.add(new Geofence.Builder()
+            .setRequestId("Psych Building")
+            .setExpirationDuration(Geofence.NEVER_EXPIRE)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+            .setCircularRegion(40.1075, -88.23, 1609)
+            .setLoiteringDelay(10000)
+            .build());
 
         try {
             geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent());
@@ -98,10 +106,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.e(TAG, "fuck you");
         }
         // Add a marker in Sydney and move the camera
-
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     public void updateLocation() {
@@ -110,6 +114,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             locationResult = fusedLocationClient.getLastLocation();
         } catch (SecurityException e) {
             Log.e(TAG, "eat ass");
+            throw new SecurityException("Permission Denied");
         }
         locationResult.addOnCompleteListener(this, new OnCompleteListener() {
             @Override
@@ -129,9 +134,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //locationUpdate();
     }
 
-    /**
-     * For display popup
-     */
     /*private void locationUpdate() {
         Snackbar updateLoc = Snackbar.make(findViewById(R.id.myCoordinatorLayout),R.string.location_update,Snackbar.LENGTH_LONG);
         updateLoc.show();
@@ -172,7 +174,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GeofencingRequest getGeofencingRequest() {
         GeofencingRequest.Builder request = new GeofencingRequest.Builder();
-        request.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_DWELL);
+        request.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
         request.addGeofences(geofences);
         return request.build();
     }

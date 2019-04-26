@@ -11,17 +11,18 @@ import static android.content.ContentValues.TAG;
 
 public class GeofenceTransitionIntentService extends IntentService {
 
-    public GeofenceTransitionIntentService(String name) {
-        super(name);
+    public GeofenceTransitionIntentService() {
+        super("GeofenceTransition");
     }
 
+    @Override
     protected void onHandleIntent(Intent intent) {
         GeofencingEvent event = GeofencingEvent.fromIntent(intent);
 
         int geofenceTransition = event.getGeofenceTransition();
 
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL) {
-            Log.e(TAG, "Holy fuck");
+            Log.e(TAG, "holy shit");
         }
     }
 }
