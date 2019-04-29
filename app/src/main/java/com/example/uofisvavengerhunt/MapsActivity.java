@@ -1,7 +1,6 @@
 package com.example.uofisvavengerhunt;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,9 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -30,8 +27,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
+import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.List;
+
+import static com.android.volley.Request.Method.POST;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -56,7 +55,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     protected Button jeff;
     private String currentTemp = "64";
-    final Button jeff = findViewById(R.id.button);
     final TextView temperature = findViewById(R.id.temp);
 
     @Override
