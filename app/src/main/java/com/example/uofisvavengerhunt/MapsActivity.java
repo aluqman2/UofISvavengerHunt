@@ -21,7 +21,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -37,8 +36,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private PendingIntent geofencePendingIntent;
     private ArrayList<Geofence> geofences = new ArrayList<>();
-
-    private FirebaseAuth mAuth;
 
     private static String triviaMessage = "Welcome to Trivia";
     private static boolean answer = true;
@@ -58,9 +55,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         geofencingClient = LocationServices.getGeofencingClient(this);
-
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
 
         final Button jeff = findViewById(R.id.button);
         jeff.setOnClickListener(v -> {
