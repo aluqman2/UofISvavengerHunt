@@ -21,6 +21,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -35,9 +36,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GeofencingClient geofencingClient;
 
     private PendingIntent geofencePendingIntent;
-
     private ArrayList<Geofence> geofences = new ArrayList<>();
+
+    private FirebaseAuth mAuth;
+
     private static String triviaMessage = "Welcome to Trivia";
+    private static boolean answer = true;
+    private static int score = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +59,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         geofencingClient = LocationServices.getGeofencingClient(this);
 
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
         final Button jeff = findViewById(R.id.button);
         jeff.setOnClickListener(v -> {
-            Log.d(TAG, "Updating Location");
+            Log.d(TAG, "Test Dialog");
             triviaTest();
         });
 
@@ -93,6 +102,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     private void triviaTest() {
         TriviaDialog trivia = new TriviaDialog();
+        System.out.println(answer);
+        System.out.println(score);
         trivia.show(getSupportFragmentManager(), "test");
     }
 
@@ -105,6 +116,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     public static String getTriviaMessage() {
         return triviaMessage;
+    }
+
+    public static void setTriviaMessage(String setTrivia) {
+        triviaMessage = setTrivia;
+    }
+
+    public static void setAnswer(boolean bool) {
+        answer = bool;
+    }
+
+    public static boolean correctAnswer() {
+        return answer;
+    }
+
+    public static void upScore() {
+        score++;
     }
 
     private void checkPermissions() {
