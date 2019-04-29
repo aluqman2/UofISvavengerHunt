@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -126,6 +127,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public static void upScore() {
         score++;
+    }
+
+    /**
+     * displays Snackbar popup
+     */
+    private void notification() {
+        Snackbar notify = Snackbar.make(findViewById(R.id.myCoordinatorLayout), R.string.notify, Snackbar.LENGTH_LONG);
+        notify.show();
     }
 
     private void checkPermissions() {
