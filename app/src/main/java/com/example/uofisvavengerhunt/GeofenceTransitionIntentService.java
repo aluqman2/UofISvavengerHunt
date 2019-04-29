@@ -8,6 +8,7 @@ import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
 import java.util.List;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -31,9 +32,11 @@ public class GeofenceTransitionIntentService extends IntentService {
         }
 
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
+
             Log.e(TAG, "holy fuck");
         }
         List<Geofence> current = event.getTriggeringGeofences();
+
         System.out.println(current);
         //find current location
         //is current location located in one of the geofences? which one

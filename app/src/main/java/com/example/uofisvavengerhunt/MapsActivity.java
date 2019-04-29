@@ -1,6 +1,7 @@
 package com.example.uofisvavengerhunt;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,7 +12,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
@@ -23,14 +28,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+
+
 
     private GoogleMap mMap;
     private Location lastLocation;
     private static final String TAG = "MainActivity";
     private FusedLocationProviderClient fusedLocationClient;
+    //private ViewGroup viewGroup = (ViewGroup) ((ViewGroup) (findViewById(R.id.myCoordinatorLayout))).getChildAt(0);
 
     private LocationRequest locationRequest;
     private GeofencingClient geofencingClient;
@@ -41,7 +52,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static String triviaMessage = "Welcome to Trivia";
     private static boolean answer = true;
     private static int score = 0;
-
+    private String currentTemp = "64";
+    final Button jeff = findViewById(R.id.button);
+    final TextView temperature = findViewById(R.id.temp);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +70,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         geofencingClient = LocationServices.getGeofencingClient(this);
 
-        final Button jeff = findViewById(R.id.button);
+
         jeff.setOnClickListener(v -> {
             Log.d(TAG, "Test Dialog");
             triviaTest();
         });
+
+        temperature.setText(setTempText());
+        temperature.setVisibility(View.VISIBLE);
 
         buildGeofences();
 
@@ -100,8 +116,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         System.out.println(answer);
         System.out.println(score);
         trivia.show(getSupportFragmentManager(), "test");
+        notification();
     }
 
+    private String setTempText() {
+        String set_text = currentTemp;
+        return set_text;
+    }
     //remember to at some point update the trivia message based on location of user
 
     /**
@@ -118,6 +139,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public static void setAnswer(boolean bool) {
+
         answer = bool;
     }
 
@@ -129,14 +151,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         score++;
     }
 
+    public static int getScore() {
+        //notification()
+        return score;
+    }
+
     /**
      * displays Snackbar popup
      */
-    private void notification() {
+    public void notification() {
         Snackbar notify = Snackbar.make(findViewById(R.id.myCoordinatorLayout), R.string.notify, Snackbar.LENGTH_LONG);
         notify.show();
     }
 
+    /**
+     * Make sure app has permissions
+     */
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -167,6 +197,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return geofencePendingIntent;
     }
 
+    /**
+     * gedit those geofences
+     */
     private void buildGeofences() {
         geofences.add(new Geofence.Builder()
                 .setRequestId("Siebel")
