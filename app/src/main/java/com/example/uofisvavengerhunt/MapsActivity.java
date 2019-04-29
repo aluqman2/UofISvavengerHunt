@@ -42,6 +42,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static boolean answer = true;
     private static int score = 0;
 
+    protected Button jeff;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         geofencingClient = LocationServices.getGeofencingClient(this);
 
-        final Button jeff = findViewById(R.id.button);
+        jeff = findViewById(R.id.button);
         jeff.setOnClickListener(v -> {
             Log.d(TAG, "Test Dialog");
             triviaTest();
@@ -172,7 +174,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .setRequestId("Siebel")
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-                .setCircularRegion(40, -88, 200)
+                .setCircularRegion(40.1138, -88.2252, 200)
                 .setLoiteringDelay(10000)
                 .build());
 
