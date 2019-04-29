@@ -13,6 +13,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Button;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -42,8 +44,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static boolean answer = true;
     private static int score = 0;
 
-    protected Button jeff;
+    private RequestQueue q;
 
+    protected Button jeff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (SecurityException e) {
             Log.e(TAG, "no perms");
         }
+
+        q = Volley.newRequestQueue(this);
     }
 
     /**
