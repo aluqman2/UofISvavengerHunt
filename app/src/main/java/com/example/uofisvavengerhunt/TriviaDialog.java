@@ -16,7 +16,17 @@ public class TriviaDialog extends AppCompatDialogFragment {
                 .setPositiveButton("Cool!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        if (MapsActivity.correctAnswer()) {
+                            MapsActivity.upScore();
+                        }
+                    }
+                })
+                .setNegativeButton("False!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (!MapsActivity.correctAnswer()) {
+                            MapsActivity.upScore();
+                        }
                     }
                 });
         return builder.create();
