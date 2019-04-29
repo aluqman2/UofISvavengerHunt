@@ -133,7 +133,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return geofencePendingIntent;
         }
         Intent intent = new Intent(this, GeofenceTransitionIntentService.class);
-        geofencePendingIntent = PendingIntent.getService(this, 1000, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        geofencePendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return geofencePendingIntent;
     }
 
@@ -141,24 +141,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         geofences.add(new Geofence.Builder()
                 .setRequestId("Siebel")
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setCircularRegion(40, -88, 10)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .setCircularRegion(40, -88, 200)
                 .setLoiteringDelay(10000)
                 .build());
 
         geofences.add(new Geofence.Builder()
                 .setRequestId("Union")
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setCircularRegion(40.1092, -88.2272, 50)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .setCircularRegion(40.1092, -88.2272, 200)
                 .setLoiteringDelay(10000)
                 .build());
 
         geofences.add(new Geofence.Builder()
                 .setRequestId("UGL")
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setCircularRegion(40.1047, -88.2272, 50)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .setCircularRegion(40.1047, -88.2272, 200)
                 .setLoiteringDelay(10000)
                 .build());
 
@@ -173,7 +173,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         geofences.add(new Geofence.Builder()
                 .setRequestId("ARC")
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
                 .setCircularRegion(40.1013, -88.2361, 50)
                 .setLoiteringDelay(10000)
                 .build());
@@ -181,40 +181,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         geofences.add(new Geofence.Builder()
                 .setRequestId("Foellinger")
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setCircularRegion(40.1059, -88.2273, 50)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .setCircularRegion(40.1059, -88.2273, 200)
                 .setLoiteringDelay(10000)
                 .build());
 
         geofences.add(new Geofence.Builder()
                 .setRequestId("Bookstore")
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setCircularRegion(40.1083, -88.2292, 50)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .setCircularRegion(40.1083, -88.2292, 200)
                 .setLoiteringDelay(10000)
                 .build());
 
         geofences.add(new Geofence.Builder()
                 .setRequestId("Armory")
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setCircularRegion(40.1047, -88.2319, 50)
-                .setLoiteringDelay(10000)
-                .build());
-
-        geofences.add(new Geofence.Builder()
-                .setRequestId("Union")
-                .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setCircularRegion(40.1092, -88.2272, 50)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .setCircularRegion(40.1047, -88.2319, 200)
                 .setLoiteringDelay(10000)
                 .build());
 
         geofences.add(new Geofence.Builder()
                 .setRequestId("McKinley")
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setCircularRegion(40.1028, -88.2199, 50)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .setCircularRegion(40.1028, -88.2199, 200)
                 .setLoiteringDelay(10000)
                 .build());
     }

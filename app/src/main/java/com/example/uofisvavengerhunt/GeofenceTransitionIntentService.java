@@ -22,8 +22,12 @@ public class GeofenceTransitionIntentService extends IntentService {
 
         int geofenceTransition = event.getGeofenceTransition();
 
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL) {
-            Log.e(TAG, "holy shit");
+        if (event.hasError()) {
+            Log.e(TAG, "Network Location Provider isn't fucking here");
+        }
+
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
+            Log.e(TAG, "holy fuck");
         }
     }
 }
