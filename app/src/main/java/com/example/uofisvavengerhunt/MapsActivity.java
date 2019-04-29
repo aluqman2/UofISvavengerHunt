@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -19,14 +18,9 @@ import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -65,21 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             triviaTest();
         });
 
-        geofences.add(new Geofence.Builder()
-                .setRequestId("Siebel")
-                .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setCircularRegion(40, -88, 10)
-                .setLoiteringDelay(10000)
-                .build());
-
-        geofences.add(new Geofence.Builder()
-            .setRequestId("Psych Building")
-            .setExpirationDuration(Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-            .setCircularRegion(40.1075, -88.23, 1609)
-            .setLoiteringDelay(10000)
-            .build());
+        buildGeofences();
 
         try {
             geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent());
@@ -107,37 +87,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         // Add a marker in Sydney and move the camera
     }
-
-    public void updateLocation() {
-        Task locationResult;
-        try {
-            locationResult = fusedLocationClient.getLastLocation();
-        } catch (SecurityException e) {
-            Log.e(TAG, "eat ass");
-            throw new SecurityException("Permission Denied");
-        }
-        locationResult.addOnCompleteListener(this, new OnCompleteListener() {
-            @Override
-            public void onComplete(@NonNull Task task) {
-                if (task.isSuccessful()) {
-                    lastLocation = (Location) task.getResult();
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(
-                            new LatLng(lastLocation.getLatitude(),
-                                    lastLocation.getLongitude())
-                    ));
-                }
-            }
-        });
-        // Grab current location, update via button.
-
-        //Show Popup message if in right location, setting this to whenever button is clicked for testing purposes
-        //locationUpdate();
-    }
-
-    /*private void locationUpdate() {
-        Snackbar updateLoc = Snackbar.make(findViewById(R.id.myCoordinatorLayout),R.string.location_update,Snackbar.LENGTH_LONG);
-        updateLoc.show();
-    } */
 
     /**
      * creates new Dialog
@@ -186,5 +135,87 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = new Intent(this, GeofenceTransitionIntentService.class);
         geofencePendingIntent = PendingIntent.getService(this, 1000, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return geofencePendingIntent;
+    }
+
+    private void buildGeofences() {
+        geofences.add(new Geofence.Builder()
+                .setRequestId("Siebel")
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setCircularRegion(40, -88, 10)
+                .setLoiteringDelay(10000)
+                .build());
+
+        geofences.add(new Geofence.Builder()
+                .setRequestId("Union")
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setCircularRegion(40.1092, -88.2272, 50)
+                .setLoiteringDelay(10000)
+                .build());
+
+        geofences.add(new Geofence.Builder()
+                .setRequestId("UGL")
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setCircularRegion(40.1047, -88.2272, 50)
+                .setLoiteringDelay(10000)
+                .build());
+
+        geofences.add(new Geofence.Builder()
+                .setRequestId("Krannert")
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setCircularRegion(40.1080, -88.2225, 50)
+                .setLoiteringDelay(10000)
+                .build());
+
+        geofences.add(new Geofence.Builder()
+                .setRequestId("ARC")
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setCircularRegion(40.1013, -88.2361, 50)
+                .setLoiteringDelay(10000)
+                .build());
+
+        geofences.add(new Geofence.Builder()
+                .setRequestId("Foellinger")
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setCircularRegion(40.1059, -88.2273, 50)
+                .setLoiteringDelay(10000)
+                .build());
+
+        geofences.add(new Geofence.Builder()
+                .setRequestId("Bookstore")
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setCircularRegion(40.1083, -88.2292, 50)
+                .setLoiteringDelay(10000)
+                .build());
+
+        geofences.add(new Geofence.Builder()
+                .setRequestId("Armory")
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setCircularRegion(40.1047, -88.2319, 50)
+                .setLoiteringDelay(10000)
+                .build());
+
+        geofences.add(new Geofence.Builder()
+                .setRequestId("Union")
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setCircularRegion(40.1092, -88.2272, 50)
+                .setLoiteringDelay(10000)
+                .build());
+
+        geofences.add(new Geofence.Builder()
+                .setRequestId("McKinley")
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                .setCircularRegion(40.1028, -88.2199, 50)
+                .setLoiteringDelay(10000)
+                .build());
     }
 }
