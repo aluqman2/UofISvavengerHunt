@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -38,7 +39,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+
+import java.net.URLConnection;
 import java.util.ArrayList;
+
+//import static com.android.volley.Request.Method.POST;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -46,7 +51,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location lastLocation;
     private static final String TAG = "MainActivity";
     private FusedLocationProviderClient fusedLocationClient;
-    //private ViewGroup viewGroup = (ViewGroup) ((ViewGroup) (findViewById(R.id.myCoordinatorLayout))).getChildAt(0);
 
     private LocationRequest locationRequest;
     private GeofencingClient geofencingClient;
@@ -68,6 +72,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static String triviaMessage = "Welcome to Trivia";
     private static boolean answer = true;
     private static int score = 0;
+
+    //private RequestQueue q;
+
+    protected Button jeff;
     private String currentTemp = "64";
 
 
@@ -135,6 +143,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (SecurityException e) {
             Log.e(TAG, "no perms");
         }
+
+        //q = //Volley.newRequestQueue(this);
     }
 
 
