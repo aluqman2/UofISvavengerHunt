@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -16,7 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -47,9 +50,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+//import static com.android.volley.Request.Method.POST;
 
-
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
     private Location lastLocation;
@@ -87,21 +90,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        TextView mStatusTextView = findViewById(R.id.status);
-        TextView mDetailTextView = findViewById(R.id.detail);
+        mStatusTextView = findViewById(R.id.status);
+        mDetailTextView = findViewById(R.id.detail);
 
-        findViewById(R.id.signInButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        findViewById(R.id.signOutButton).setOnClickListener(v -> {
-            Log.d(TAGG, "Test Dialog");
-        });
-        findViewById(R.id.disconnectButton).setOnClickListener(v -> {
-            Log.d(TAGG, "Test Dialog");
-        });
+        findViewById(R.id.signInButton).setOnClickListener(this);
+        findViewById(R.id.signOutButton).setOnClickListener(this);
+        findViewById(R.id.disconnectButton).setOnClickListener(this);
 
         // [START config_signin]
         // Configure Google Sign In
@@ -315,6 +309,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     //remember to at some point update the trivia message based on location of user
 
+    @VisibleForTesting
+    public ProgressDialog mProgressDialog;
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    public void hideKeyboard(View view) {
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        hideProgressDialog();
+    }
     /**
      * supporting method for TriviaDialog class
      * gives the string in triviaMessage to TriviaDialog to display to user
