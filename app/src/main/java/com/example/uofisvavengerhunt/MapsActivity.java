@@ -208,7 +208,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
 
                         // [START_EXCLUDE]
-                        //hideProgressDialog();
+                        hideProgressDialog();
                         // [END_EXCLUDE]
                     }
                 });

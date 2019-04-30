@@ -46,7 +46,7 @@ public class GeofenceTransitionIntentService extends IntentService {
                 TriviaDialog trivia = new TriviaDialog();
             }
             if (current.toString().contains("UGL")) {
-                MapsActivity.setTriviaMessage("");
+                MapsActivity.setTriviaMessage("The UGL was constructed in part to not obstruct the Morrow Plots");
                 MapsActivity.setAnswer(true);
                 TriviaDialog trivia = new TriviaDialog();
             }
@@ -69,18 +69,18 @@ public class GeofenceTransitionIntentService extends IntentService {
                 TriviaDialog trivia = new TriviaDialog();
             }
             if (current.toString().contains("Bookstore")) {
-                MapsActivity.setTriviaMessage("");
-                MapsActivity.setAnswer(true);
+                MapsActivity.setTriviaMessage("The Illini Union Bookstore has good prices on stationary and books");
+                MapsActivity.setAnswer(false);
                 TriviaDialog trivia = new TriviaDialog();
             }
             if (current.toString().contains("Armory")) {
-                MapsActivity.setTriviaMessage("");
+                MapsActivity.setTriviaMessage("The Armory housed some of the most cadets in the country during World War 1");
                 MapsActivity.setAnswer(true);
                 TriviaDialog trivia = new TriviaDialog();
             }
             if (current.toString().contains("McKinley")) {
-                MapsActivity.setTriviaMessage("");
-                MapsActivity.setAnswer(true);
+                MapsActivity.setTriviaMessage("The McKinley Health Center is named after a famous rock in Chicago");
+                MapsActivity.setAnswer(false);
                 TriviaDialog trivia = new TriviaDialog();
             }
         }
