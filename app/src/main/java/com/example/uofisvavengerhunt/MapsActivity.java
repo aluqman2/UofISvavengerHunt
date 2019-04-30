@@ -17,6 +17,9 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -27,10 +30,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
-import java.net.URLConnection;
 import java.util.ArrayList;
-
-import static com.android.volley.Request.Method.POST;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -50,10 +50,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static String triviaMessage = "Welcome to Trivia";
     private static boolean answer = true;
     private static int score = 0;
+    private GoogleSignInClient googleSignInClient;
 
     private RequestQueue q;
 
-    protected Button jeff;
     private String currentTemp = "64";
     final TextView temperature = findViewById(R.id.temp);
 
@@ -71,16 +71,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         geofencingClient = LocationServices.getGeofencingClient(this);
 
+        Button jeff;
+        Button signIn;
+
         jeff = findViewById(R.id.button);
         jeff.setOnClickListener(v -> {
             Log.d(TAG, "Test Dialog");
             triviaTest();
         });
 
+        signIn = findViewById(R.id.signInButton);
+        signIn.setOnClickListener(v -> {
+            Log.e(TAG, "bruh, sign in shit");
+            signIn();
+        });
+
         temperature.setText(setTempText());
         temperature.setVisibility(View.VISIBLE);
 
         buildGeofences();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
 
         try {
             geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent());
@@ -275,5 +290,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .setCircularRegion(40.1028, -88.2199, 200)
                 .setLoiteringDelay(10000)
                 .build());
+    }
+
+    private void signIn() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, 69);
     }
 }
