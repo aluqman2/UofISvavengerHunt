@@ -294,7 +294,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
             LatLng latlng = new LatLng(40.1092, -88.2272);
             mMap.moveCamera(CameraUpdateFactory
-                .newLatLngZoom(latlng, 40));
+                .newLatLngZoom(latlng, 17));
         } catch (SecurityException e) {
             Log.e(TAG, "fuck you");
         }
