@@ -43,6 +43,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.util.ArrayList;
@@ -79,7 +81,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleSignInClient googleSignInClient;
 
     private String currentTemp = "64";
-
+    private DatabaseReference mDatabase;
+    //mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
     @Override
