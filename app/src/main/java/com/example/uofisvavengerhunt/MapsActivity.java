@@ -25,20 +25,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -50,9 +47,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.ArrayList;
 
-//import static com.android.volley.Request.Method.POST;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
+
+
 
     private GoogleMap mMap;
     private Location lastLocation;
@@ -76,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
-    private static String triviaMessage = "Welcome to Trivia";
+    private static String triviaMessage = "Try to find a zone! Hint: Most popular places on campus have some trivia :)";
     private static boolean answer = true;
     private static int score = 0;
     private GoogleSignInClient googleSignInClient;
@@ -123,13 +120,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         geofencingClient = LocationServices.getGeofencingClient(this);
 
         final Button jeff = findViewById(R.id.buttont);
-        final TextView temperature = findViewById(R.id.temp);
+        final TextView temperature = findViewById(R.id.leaderboardButton);
         jeff.setOnClickListener(v -> {
             Log.d(TAG, "Test Dialog");
             triviaTest();
         });
 
-        temperature.setText(setTempText());
+        Button leader = findViewById(R.id.leaderboardButton);
+        leader.setOnClickListener(v -> {
+            Intent intent = new Intent(this, LeaderboardActivity.class);
+            startActivity(intent);
+        });
+
+        //temperature.setText(setTempText());
         temperature.setVisibility(View.VISIBLE);
 
         buildGeofences();
@@ -286,6 +289,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         try {
             mMap.setMyLocationEnabled(true);
+            LatLng latlng = new LatLng(40.1092, -88.2272);
+            mMap.moveCamera(CameraUpdateFactory
+                .newLatLngZoom(latlng, 40));
         } catch (SecurityException e) {
             Log.e(TAG, "fuck you");
         }
@@ -300,7 +306,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         System.out.println(answer);
         System.out.println(score);
         trivia.show(getSupportFragmentManager(), "test");
-        notification();
+        //notification();
     }
 
     private String setTempText() {
@@ -428,7 +434,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .setRequestId("Union")
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-                .setCircularRegion(40.1092, -88.2272, 200)
+                .setCircularRegion(40.1092, -88.2272, 2000)
                 .setLoiteringDelay(10000)
                 .build());
 
